@@ -1,0 +1,295 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+$darkest: #81A8B8;
+$dark: #A4BCC2;
+$middle: #C2CBCE;
+$light: #DBE6EC;
+$lightest: #E8F3F8;
+
+$sidebar-width: 260px;
+
+//
+// Fonts & Colours
+//
+body, input {
+    font-family: Merriweather;
+    margin: 0;
+}
+
+.content h1 {
+    text-align: center;
+    font-size: 2.5em;
+}
+
+code[class*=language-], pre[class*=language-] {
+    font-family: 'Anonymous Pro', Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+.content a {
+    color: #000;
+    border-bottom: 1px solid $middle;
+    box-shadow: inset 0 -4px 0 $middle;
+    transition: all .15s cubic-bezier(.33,.66,.66,1);
+    text-decoration: none;
+
+    &:hover {
+        background: $middle;
+        border-top: 2px solid $middle;
+        box-shadow: inset 0 -5px 0 $middle;
+    }
+}
+
+
+//
+// Layout
+//
+
+.site-header {
+    padding: 20px 20px 0 20px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.site-title {
+    width: 100%;
+
+    a {
+        position: relative;
+        color: #000;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 1.5em;
+        text-decoration: none;
+        line-height: 30px;
+    }
+
+
+    img {
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        margin-bottom:5px;
+    }
+}
+
+.site-nav {
+    width: 70px;
+    flex-basis: auto;
+
+    a {
+        color: #000;
+    }
+
+    .fa-search {
+        padding-right: 10px;
+    }
+}
+
+.content-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.content {
+    max-width: 800px;
+    margin-top: -20px;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.toc {
+    * {
+        display: none;
+    }
+    padding-top: 68px;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        padding-left: 15px;
+    }
+
+    a {
+        color: #000;
+        font-style: italic;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+//
+// Code styling
+//
+
+pre[class*=language-]>code[data-language] {
+    line-height: 1.1em;
+
+    &::before {
+        display: none;
+    }
+}
+
+.token.tab:not(:empty):before,
+.token.cr:before,
+.token.lf:before {
+    display: none;
+}
+
+
+//
+// Overlay
+//
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(61,123,186,0.9);
+    overflow: scroll;
+}
+
+.overlay-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+}
+
+/* Menu style */
+.overlay nav {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0 100px 50px 100px;
+    overflow: scroll;
+    font-size: 1.5em;
+    color: #fff;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin:0;
+    }
+
+    .topic-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    a {
+        color: #fff;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+
+        &:hover, &:focus {
+            color: #f0f0f0;
+        }
+    }
+
+    .topic {
+        border-left: solid 4px;
+        min-width: 300px;
+        padding-left: 15px;
+        margin-top: 50px;
+    }
+}
+
+.overlay li {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: color 0.2s;
+    transition: color 0.2s;
+}
+
+.overlay ul.children li {
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+/* Effects */
+.overlay {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    -webkit-transition: -webkit-transform 0.2s, opacity 0.2s, visibility 0s 0.2s;
+    transition: transform 0.2s, opacity 0.2s, visibility 0s 0.2s;
+}
+
+.overlay.open {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.search-overlay nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    ul {
+        margin: auto;
+        small {
+            font-family: 'Anonymous Pro', Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.6em;
+            color: #fff;
+            opacity: 0.7;
+        }
+
+        a {
+            padding-top: 0.2em;
+
+            &.selected {
+                &:before {
+                    font-family: FontAwesome;
+                    margin-left: -1.1em;
+                    content: "\f054";
+                }
+            }
+        }
+    }
+
+    input {
+        color: #fff;
+        font-size: 2em;
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid white;
+        outline: none;
+        padding-top: 1em;
+        margin: auto;
+        margin-bottom: 1em;
+        width: 700px;
+    }
+}

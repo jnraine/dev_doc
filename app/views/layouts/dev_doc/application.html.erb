@@ -1,0 +1,102 @@
+<DOCTYPE html>
+<html>
+<head>
+  <title><%= @article.title %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic,900,900italic,300italic,300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <%= stylesheet_link_tag "dev_doc/application" %>
+</head>
+<body>
+  <div class="site-header">
+    <div class="site-title">
+      <a href="<%= root_path %>">
+        <img src="https://pbs.twimg.com/profile_images/378800000548943885/abe112bf7e98d658743b60437fff7d62_400x400.png">
+        Docs
+      </a>
+    </div>
+
+    <div class="site-nav">
+      <a title="Press 't' to open search" id="js-search-trigger" href="#">
+        <i class="fa fa-lg fa-search"></i>
+      </a>
+
+      <a title="Press 'n' to open navigation" id="js-nav-trigger" href="#">
+        <i class="fa fa-lg fa-bars"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div><!-- empty column --></div>
+
+    <div class="content">
+      <%= yield %>
+    </div>
+
+    <div class="toc">
+      <ul>
+        <% @article.toc.each do |level_one_entry| %>
+          <li>
+            <%= link_to level_one_entry[:text], "##{level_one_entry[:id]}" %>
+
+            <% next unless level_one_entry[:children].present? %>
+
+            <ul>
+              <% level_one_entry[:children].each do |level_two_entry| %>
+                <%= link_to level_two_entry[:text], "##{level_two_entry[:id]}" %>
+              <% end -%>
+            </ul>
+          </li>
+        <% end -%>
+      </ul>
+    </div>
+
+    <div class="overlay nav-overlay">
+      <nav>
+        <% @topics.each do |topic| %>
+          <div class="topic">
+            <div class="topic-name">
+              <%= link_to_if topic.index.exist?, topic.name, article_path(topic.index) %>
+            </div>
+
+            <% if topic.children.present? %>
+              <ul class="children">
+                <% topic.children.each do |child| %>
+                  <li><%= link_to child.title, article_path(child) %></li>
+                <% end %>
+              </ul>
+            <% end -%>
+          </div>
+        <% end -%>
+      </nav>
+    </div>
+
+    <div class="overlay search-overlay">
+      <nav>
+        <input name="search" type="text">
+
+        <ul>
+          <% @topics.each do |topic| %>
+            <% topic.children.each do |article| %>
+              <li>
+                <%= link_to article_path(article) do %>
+                  <%= topic.name %> > <%= article.title %>
+                  <small><%= article.path.to_s.gsub("#{Rails.root}/", '') %></small>
+                <% end -%>
+              </li>
+            <% end -%>
+          <% end -%>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <%= javascript_include_tag "dev_doc/application", async: true %>
+</body>
+</html>
