@@ -41,14 +41,16 @@ module DevDoc
     end
 
     def body
-      @body ||= begin#Rails.cache.fetch(cache_key("body"), expires_in: 1) do
+      @body ||= Rails.cache.fetch(cache_key("body")) do
         Rails.logger.info("Render body for #{path}")
         MARKDOWN.render(body_string)
       end
     end
 
     def toc
-      @toc = TableOfContents.generate(body)
+      @toc ||= Rails.cache.fetch(cache_key("toc")) do
+        TableOfContents.generate(body)
+      end
     end
 
     def title
@@ -67,7 +69,6 @@ module DevDoc
     end
 
     def metadata
-      Rails.cache.clear
       @metadata ||= Rails.cache.fetch(cache_key("metadata")) do
         Rails.logger.info("Loading YAML string for #{path}")
         YAML.load(yaml_string) || {}
@@ -114,9 +115,17 @@ module DevDoc
     end
 
     def cache_key(name)
-      @base_cache_key ||= ["dev-decs-article", path, File.mtime("dev-docs/index.md").to_i].join("/")
+      @base_cache_key ||= ["dev-decs-article", path, last_modified.to_i].join("/")
       Rails.logger.info("Base cache key for #{path} is #{@base_cache_key}")
       "#{@base_cache_key}/#{name}"
+    end
+
+    def etag
+      @etag ||= Digest::MD5.hexdigest(cache_key("etag"))
+    end
+
+    def last_modified
+      @last_modified ||= File.mtime("dev-docs/index.md")
     end
 
     def nil?

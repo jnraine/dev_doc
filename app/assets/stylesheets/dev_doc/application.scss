@@ -20,18 +20,20 @@ $dark-grey: #C3C0BF;
 $grey: #C2CBCE;
 $light-grey: rgb(245, 242, 240);
 $transparent-blue: rgba(61,123,186,0.9);
+$serif-family: 'Playfair Display', serif;
+$sans-serif-family: Muli, sans-serif, Merriweather;
 
 //
 // Fonts & Colours
 //
-body, input {
-    font-family: Muli, sans-serif, Merriweather;
+body {
+    font-family: $sans-serif-family;
     margin: 0;
     color: $off-black;
 }
 
-h1,h2,h3,h4,h5,.site-header {
-    font-family: 'Playfair Display', serif;
+h1,h2,h3,h4,h5,.site-header,input {
+    font-family: $serif-family;
 }
 
 .content h1 {
@@ -216,6 +218,7 @@ pre[class*=language-]>code[data-language] {
     overflow: scroll;
     font-size: 1.5em;
     color: #fff;
+    font-family: $serif-family;
 
     ul {
         list-style-type: none;

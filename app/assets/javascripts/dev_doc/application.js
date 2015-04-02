@@ -133,6 +133,12 @@
 			}
 		});
 
+		$(".search-overlay li a").hover(function() {
+			var link = $(this);
+			link.parents("ul").find("a.selected").removeClass("selected");
+			link.addClass("selected");
+		});
+
 		$(document).on("keydown", ".search-overlay input", function(e) {
 			var upKey = 38;
 			var downKey = 40;

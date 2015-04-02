@@ -1,6 +1,7 @@
 module DevDoc
   class RootController < ActionController::Base
     before_filter :check_article
+    before_filter :check_freshness
 
     def index
       @topics = Topic.all
@@ -15,6 +16,10 @@ module DevDoc
     def check_article
       return if article.exist?
       render text: "<h1>Not Found: #{article.path}</h1>", format: :html, layout: false, status: 404
+    end
+
+    def check_freshness
+      return false unless stale?(etag: article.etag, last_modified: article.last_modified)
     end
 
     def article
