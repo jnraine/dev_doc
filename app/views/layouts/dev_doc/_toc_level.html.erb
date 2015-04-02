@@ -1,0 +1,8 @@
+<ul>
+  <% collection.each do |entry| %>
+    <li>
+      <%= link_to entry[:text], "##{entry[:id]}" %>
+      <%= render partial: "layouts/dev_doc/toc_level", locals: {collection: entry[:children]} if entry[:children].present? %>
+    </li>
+  <% end -%>
+</ul>

@@ -5,7 +5,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
   <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic,900,900italic,300italic,300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ovo' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Muli:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <%= stylesheet_link_tag "dev_doc/application" %>
 </head>
@@ -37,21 +41,7 @@
     </div>
 
     <div class="toc">
-      <ul>
-        <% @article.toc.each do |level_one_entry| %>
-          <li>
-            <%= link_to level_one_entry[:text], "##{level_one_entry[:id]}" %>
-
-            <% next unless level_one_entry[:children].present? %>
-
-            <ul>
-              <% level_one_entry[:children].each do |level_two_entry| %>
-                <li><%= link_to level_two_entry[:text], "##{level_two_entry[:id]}" %></li>
-              <% end -%>
-            </ul>
-          </li>
-        <% end -%>
-      </ul>
+      <%= render partial: "layouts/dev_doc/toc_level", locals: {collection: @article.toc} %>
     </div>
 
     <div class="overlay nav-overlay">
