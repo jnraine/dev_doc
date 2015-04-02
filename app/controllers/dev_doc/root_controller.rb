@@ -1,7 +1,7 @@
 module DevDoc
   class RootController < ActionController::Base
     before_filter :check_article
-    before_filter :check_freshness
+    # before_filter :check_freshness
 
     def index
       @topics = Topic.all

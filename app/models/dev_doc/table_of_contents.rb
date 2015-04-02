@@ -24,14 +24,14 @@ module DevDoc
         # TO-DO: make this less repetitive
         if heading.name == "h2"
           toc << toc_entry
-        elsif heading.name == "h3"
-          toc.last[:children] ||= [] # bug here
+        elsif heading.name == "h3" && toc.last
+          toc.last[:children] ||= []
           toc.last[:children] << toc_entry
-        elsif heading.name == "h4"
-          toc.last[:children].last[:children] ||= [] # bug here
+        elsif heading.name == "h4" && toc.last.try(:[], :children).try(:last)
+          toc.last[:children].last[:children] ||= []
           toc.last[:children].last[:children] << toc_entry
-        elsif heading.name == "h5"
-          toc.last[:children].last[:children].last[:children] ||= [] # bug here
+        elsif heading.name == "h5" && toc.last.try(:[], :children).try(:last).try(:[], :children).try(:last)
+          toc.last[:children].last[:children].last[:children] ||= []
           toc.last[:children].last[:children].last[:children] << toc_entry
         end
       end

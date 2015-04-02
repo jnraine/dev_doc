@@ -8,13 +8,14 @@ module DevDoc
         lang = "markup" if lang == "html" # Prism refers to HTML as markup.
         html_escaped_code = ERB::Util.h(code)
 
-        if lang == "live-html"
+        if lang.start_with?("live-html")
+          iframe_attributes = lang.split(",").last if lang.include?(",")
           [
             %Q[<pre><code class="language-markup">#{html_escaped_code}</code></pre>],
             <<-EOF
               <div class="iframe-wrapper">
                 <div class="iframe-loading"><i class="fa fa-refresh fa-spin fa-3x"></i></div>
-                <iframe width="100%" src="/dev/html_snippet?source=#{CGI.escape(code)}"></iframe>
+                <iframe #{iframe_attributes} src="/dev/html_snippet?source=#{CGI.escape(code)}"></iframe>
               </div>
             EOF
           ].join
@@ -31,7 +32,7 @@ module DevDoc
     end
 
     RENDERER = PrismRenderer.new(with_toc_data: true)
-    MARKDOWN = Redcarpet::Markdown.new(RENDERER, fenced_code_blocks: true, tables: true, autolink: true)
+    MARKDOWN = Redcarpet::Markdown.new(RENDERER, fenced_code_blocks: true, tables: true, autolink: true, strikethrough: true)
     YAML_DELIMITER = "==="
 
     attr_accessor :path
@@ -116,7 +117,6 @@ module DevDoc
 
     def cache_key(name)
       @base_cache_key ||= ["dev-decs-article", path, last_modified.to_i].join("/")
-      Rails.logger.info("Base cache key for #{path} is #{@base_cache_key}")
       "#{@base_cache_key}/#{name}"
     end
 
@@ -125,7 +125,7 @@ module DevDoc
     end
 
     def last_modified
-      @last_modified ||= File.mtime("dev-docs/index.md")
+      @last_modified ||= File.mtime(path)
     end
 
     def nil?
