@@ -14,13 +14,12 @@
  *= require_self
  */
 
-$darkest: #81A8B8;
-$dark: #A4BCC2;
-$middle: #C2CBCE;
-$light: #DBE6EC;
-$lightest: #E8F3F8;
-
-$sidebar-width: 260px;
+$black: rgb(0, 0, 0);
+$off-black: rgba(0, 0, 0, 0.8);
+$dark-grey: #C3C0BF;
+$grey: #C2CBCE;
+$light-grey: rgb(245, 242, 240);
+$transparent-blue: rgba(61,123,186,0.9);
 
 //
 // Fonts & Colours
@@ -28,6 +27,7 @@ $sidebar-width: 260px;
 body, input {
     font-family: Merriweather;
     margin: 0;
+    color: $off-black;
 }
 
 .content h1 {
@@ -35,21 +35,37 @@ body, input {
     font-size: 2.5em;
 }
 
+h2,h3,h4 {
+    border-bottom: solid 1px $light-grey;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.3em;
+}
+
 code[class*=language-], pre[class*=language-] {
     font-family: 'Anonymous Pro', Consolas, Monaco, 'Andale Mono', monospace;
 }
 
-.content a {
+p {
+    line-height: 1.5em;
+
+    code {
+        font-size: 1.2em;
+        padding: 0.25em;
+        background: $light-grey;
+    }
+}
+
+.content p a {
     color: #000;
-    border-bottom: 1px solid $middle;
-    box-shadow: inset 0 -4px 0 $middle;
+    border-bottom: 1px solid $grey;
+    box-shadow: inset 0 -4px 0 $grey;
     transition: all .15s cubic-bezier(.33,.66,.66,1);
     text-decoration: none;
 
     &:hover {
-        background: $middle;
-        border-top: 2px solid $middle;
-        box-shadow: inset 0 -5px 0 $middle;
+        background: $grey;
+        border-top: 2px solid $grey;
+        box-shadow: inset 0 -5px 0 $grey;
     }
 }
 
@@ -117,15 +133,20 @@ code[class*=language-], pre[class*=language-] {
 }
 
 .toc {
-    * {
-        display: none;
-    }
     padding-top: 68px;
+
+    > ul {
+        border-left: 6px solid $dark-grey;
+    }
 
     ul {
         list-style-type: none;
         padding: 0;
         padding-left: 15px;
+    }
+
+    li {
+        padding-top: 0.2em;
     }
 
     a {
@@ -168,7 +189,7 @@ pre[class*=language-]>code[data-language] {
     height: 100%;
     top: 0;
     left: 0;
-    background: rgba(61,123,186,0.9);
+    background: $transparent-blue;
     overflow: scroll;
 }
 
@@ -184,8 +205,9 @@ pre[class*=language-]>code[data-language] {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
+    align-items: flex-start;
     justify-content: space-around;
     padding: 0 100px 50px 100px;
     overflow: scroll;
@@ -273,6 +295,9 @@ pre[class*=language-]>code[data-language] {
             &.selected {
                 &:before {
                     font-family: FontAwesome;
+                    font-size: 0.6em;
+                    line-height: 1em;
+                    vertical-align: middle;
                     margin-left: -1.1em;
                     content: "\f054";
                 }
@@ -291,5 +316,69 @@ pre[class*=language-]>code[data-language] {
         margin: auto;
         margin-bottom: 1em;
         width: 700px;
+    }
+}
+
+.content iframe {
+    width: 100%;
+    box-sizing: border-box;
+    border: dashed $light-grey 4px;
+}
+
+.iframe-wrapper {
+    position: relative;
+
+    .iframe-loading {
+        color: $grey;
+        position: absolute;
+        left: -60px;
+        top: 35%;
+    }
+}
+
+.content blockquote {
+    color: $black;
+    border-left: solid $dark-grey 4px;
+    padding-left: 8px;
+    margin-left: 0;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    width: 100%;
+    box-sizing: border-box;
+
+    p {
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+    }
+
+    &.caution {
+        background: #f7c2c0;
+        border-left: solid rgba(0, 0, 0, 0.2) 4px;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+
+    &.history {
+        background: #e0eaf3;
+        border-left: solid rgba(0, 0, 0, 0.2) 4px;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+}
+
+.content table {
+    border-collapse: collapse;
+
+    th, td {
+        border: solid 1px black;
+        padding: 0.6em;
+    }
+
+    tbody tr:nth-child(even) {
+        background: $light-grey;
     }
 }

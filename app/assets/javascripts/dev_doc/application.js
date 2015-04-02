@@ -142,6 +142,8 @@
 			if (e.keyCode == upKey) {
 				var prevItem = selectedLink.removeClass("selected").parent().prev();
 
+
+			// A bug exists, causing this to not work when there are hidden elements at the top or end of the list
 				if(prevItem.length == 0) { // get last list item if we're at the start of the list
 					var prevItem = selectedLink.parents("ul").children("li").last();
 				}
@@ -164,6 +166,10 @@
 			}
 		});
 
+
+		$("iframe").load(function() {
+			$(this).parent().find(".iframe-loading").remove();
+		});
 	});
 
 	$(document).trigger("ready");

@@ -3,8 +3,13 @@ module DevDoc
     def self.all
       Dir.entries(DevDoc.root).map do |basename|
         path = DevDoc.root.join(basename)
-        next if File.file?(path) || basename.start_with?(".")
-        Topic.new(path)
+        next if basename.start_with?(".")
+
+        if File.file?(path)
+          ArticleTopic.new(path)
+        else
+          Topic.new(path)
+        end
       end.compact
     end
 
@@ -25,6 +30,18 @@ module DevDoc
 
     def name
       @name ||= index.exist? ? index.title : File.basename(path).humanize
+    end
+
+    # For topics with a single article.
+    class ArticleTopic
+      attr_accessor :index, :path, :children, :name
+
+      def initialize(path)
+        self.path = path
+        self.index = Article.new(path)
+        self.children = []
+        self.name = index.title
+      end
     end
   end
 end

@@ -14,7 +14,7 @@
     <div class="site-title">
       <a href="<%= root_path %>">
         <img src="https://pbs.twimg.com/profile_images/378800000548943885/abe112bf7e98d658743b60437fff7d62_400x400.png">
-        Docs
+        Doc
       </a>
     </div>
 
@@ -46,7 +46,7 @@
 
             <ul>
               <% level_one_entry[:children].each do |level_two_entry| %>
-                <%= link_to level_two_entry[:text], "##{level_two_entry[:id]}" %>
+                <li><%= link_to level_two_entry[:text], "##{level_two_entry[:id]}" %></li>
               <% end -%>
             </ul>
           </li>
@@ -80,10 +80,15 @@
 
         <ul>
           <% @topics.each do |topic| %>
-            <% topic.children.each do |article| %>
+            <% [topic.children, topic.index].reject(&:nil?).flatten.each do |article| %>
               <li>
                 <%= link_to article_path(article) do %>
-                  <%= topic.name %> > <%= article.title %>
+                  <% if topic.index == article %>
+                    <%= article.title %>
+                  <% else %>
+                    <%= topic.name %> > <%= article.title %>
+                  <% end -%>
+
                   <small><%= article.path.to_s.gsub("#{Rails.root}/", '') %></small>
                 <% end -%>
               </li>
