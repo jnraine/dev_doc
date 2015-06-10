@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = DevDoc::VERSION
   s.authors     = ["Jordan Raine"]
   s.email       = ["jordan.raine@clio.com"]
-  s.homepage    = "TODO"
+  s.homepage    = "http://google.com"
   s.summary     = "Documentation for your application."
   s.description = "Documentation for your application."
   s.license     = "MIT"
@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.0.13"
+  s.add_dependency "rails", ">=4.0"
   s.add_dependency "turbolinks", "~> 2.5.3"
-  s.add_dependency "nokogiri", "~> 1.5.0"
+  s.add_dependency "nokogiri", "~> 1.5"
   s.add_dependency "redcarpet", "~> 3.2.2"
 
   s.add_development_dependency "rspec-rails", "~> 2.14.1"
