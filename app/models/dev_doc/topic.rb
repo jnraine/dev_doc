@@ -29,7 +29,7 @@ module DevDoc
     end
 
     def name
-      @name ||= index.exist? ? index.title : File.basename(path).humanize
+      @name ||= index.exist? ? index.title : File.basename(path).titleize
     end
 
     # For topics with a single article.
