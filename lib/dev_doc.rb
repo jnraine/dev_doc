@@ -1,4 +1,3 @@
-require "turbolinks"
 require "dev_doc/engine"
 
 module DevDoc
